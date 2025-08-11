@@ -1,4 +1,3 @@
-// ===== Helpers =====
 const $ = (sel) => document.querySelector(sel);
 
 function toISODateInput(d) {
@@ -12,15 +11,12 @@ function fromISODateInput(v) {
   return new Date(y, m - 1, d);
 }
 
-// ===== Exam date state =====
 const DATE_KEY = 'thptqg_exam_date_iso';
 const dateInput = $('#examDate');
 const saveBtn   = $('#saveDate');
-// targetEl có thể KHÔNG tồn tại nếu bạn xoá phần "Mục tiêu"
 const targetEl  = $('#targetText');
 
 function defaultExamDate() {
-  // 25/06 năm hiện tại; nếu đã qua -> sang năm sau
   const now = new Date();
   const d = new Date(now.getFullYear(), 5, 25);
   if (now > d) d.setFullYear(d.getFullYear() + 1);
@@ -36,12 +32,9 @@ function saveExamDate(d) {
 
 let examDate = loadExamDate();
 
-// Nếu còn input thì set value; nếu không có thì vẫn chạy countdown bình thường
 if (dateInput) dateInput.value = toISODateInput(examDate);
-// Nếu còn "Mục tiêu" thì cập nhật, còn không thì bỏ qua
 if (targetEl) targetEl.textContent = 'Mục tiêu: ' + toISODateInput(examDate).split('-').reverse().join('/');
 
-// Lắng nghe nút Lưu nếu có
 if (saveBtn && dateInput) {
   saveBtn.addEventListener('click', () => {
     const v = dateInput.value;
@@ -61,7 +54,6 @@ const dEl = $('#cd-days'), hEl = $('#cd-hours'), mEl = $('#cd-mins'), sEl = $('#
 function tick() {
   const now = new Date();
 
-  // nếu đã qua ngày thi -> sang năm sau
   if (now > examDate) {
     examDate = new Date(examDate.getFullYear() + 1, examDate.getMonth(), examDate.getDate());
     saveExamDate(examDate);
@@ -72,8 +64,8 @@ function tick() {
     }
   }
 
-  const diff = Math.max(0, (examDate - now) / 1000); // không để âm
-  if (!dEl || !hEl || !mEl || !sEl) return; // thiếu phần tử thì bỏ qua
+  const diff = Math.max(0, (examDate - now) / 1000); /
+  if (!dEl || !hEl || !mEl || !sEl) return; 
 
   const days  = Math.floor(diff / 86400);
   const hours = Math.floor((diff % 86400) / 3600);
