@@ -1,3 +1,4 @@
+// ===== Helpers =====
 const $ = (sel) => document.querySelector(sel);
 
 function toISODateInput(d) {
@@ -11,10 +12,10 @@ function fromISODateInput(v) {
   return new Date(y, m - 1, d);
 }
 
+// ===== Exam date state =====
 const DATE_KEY = 'thptqg_exam_date_iso';
 const dateInput = $('#examDate');
 const saveBtn   = $('#saveDate');
-const targetEl  = $('#targetText');
 
 function defaultExamDate() {
   const now = new Date();
@@ -33,7 +34,6 @@ function saveExamDate(d) {
 let examDate = loadExamDate();
 
 if (dateInput) dateInput.value = toISODateInput(examDate);
-if (targetEl) targetEl.textContent = 'Mục tiêu: ' + toISODateInput(examDate).split('-').reverse().join('/');
 
 if (saveBtn && dateInput) {
   saveBtn.addEventListener('click', () => {
@@ -41,10 +41,6 @@ if (saveBtn && dateInput) {
     if (!v) return;
     examDate = fromISODateInput(v);
     saveExamDate(examDate);
-    if (targetEl) {
-      const [y, m, d] = v.split('-');
-      targetEl.textContent = `Mục tiêu: ${d}/${m}/${y}`;
-    }
   });
 }
 
@@ -58,13 +54,9 @@ function tick() {
     examDate = new Date(examDate.getFullYear() + 1, examDate.getMonth(), examDate.getDate());
     saveExamDate(examDate);
     if (dateInput) dateInput.value = toISODateInput(examDate);
-    if (targetEl) {
-      const v = toISODateInput(examDate).split('-').reverse().join('/');
-      targetEl.textContent = 'Mục tiêu: ' + v;
-    }
   }
 
-  const diff = Math.max(0, (examDate - now) / 1000); /
+  const diff = Math.max(0, (examDate - now) / 1000); 
   if (!dEl || !hEl || !mEl || !sEl) return; 
 
   const days  = Math.floor(diff / 86400);
@@ -119,7 +111,6 @@ async function fetchQuote(force = false) {
 if (refreshBtn) refreshBtn.addEventListener('click', () => fetchQuote(true));
 fetchQuote();
 
-// ===== Callout close & remember =====
 const CALLOUT_KEY = 'hocba_callout_closed_v1';
 const callout = document.getElementById('hocbaCallout');
 const closeCalloutBtn = document.getElementById('closeCallout');
