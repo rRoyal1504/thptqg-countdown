@@ -33,15 +33,20 @@ body::before{
 .container{max-width:980px;margin:0 auto;padding:40px 20px 80px;position:relative;z-index:1}
 
 /* Hero */
-.hero h1{
+.hero-title{
+  display:flex; align-items:center; gap:12px;
   margin:0 0 6px;
+  white-space:nowrap;           /* giữ cùng 1 dòng */
+}
+.logo{font-size:clamp(28px,6vw,42px)}
+.title-text{
   font-size:clamp(34px,6vw,56px);
-  font-weight:800;
-  letter-spacing:.3px;
-  background:linear-gradient(135deg,#6ee7ff,var(--accent),var(--accent2));
+  font-weight:800; letter-spacing:.3px;
+  /* gradient nhẹ hơn, ít chói */
+  background:linear-gradient(135deg,#b7d3ff 0%, #cdb3ff 40%, #f6b3d3 100%);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 0 16px rgba(168,85,247,.25));
+  filter:drop-shadow(0 0 12px rgba(168,85,247,.18));
 }
 .subtitle{color:var(--text-dim);margin-top:8px;font-size:clamp(14px,2.4vw,18px)}
 
@@ -95,7 +100,8 @@ body::before{
 /* Callout floating */
 .callout{
   padding:12px 14px;border-radius:12px;background:var(--panel);
-  border:1px solid var(--border);display:flex;gap:12px;align-items:flex-start
+  border:1px solid var(--border);display:flex;gap:12px;align-items:flex-start;
+  position:relative;
 }
 .callout .icn{font-size:18px;line-height:1;opacity:.9}
 .callout .content{font-size:.95rem;color:var(--text-dim)}
@@ -103,6 +109,12 @@ body::before{
 .callout a.link{color:#e8d5ff;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.35);font-weight:700}
 .callout a.link:hover{border-bottom-style:solid}
 .callout .badge{margin-left:6px;padding:2px 8px;border-radius:9999px;font-size:.7rem;background:rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.5);color:#e9d5ff}
+.callout-close{
+  position:absolute; right:8px; top:8px;
+  background:#121833; color:#fff; border:1px solid var(--border);
+  border-radius:8px; padding:2px 8px; cursor:pointer; opacity:.85;
+}
+.callout-close:hover{opacity:1}
 
 .callout-fab{
   position:fixed;right:22px;bottom:22px;width:min(360px,calc(100vw - 32px));z-index:40;
@@ -111,6 +123,8 @@ body::before{
   transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease
 }
 .callout-fab:hover{transform:translateY(-2px);box-shadow:0 22px 60px rgba(0,0,0,.45),0 0 28px rgba(168,85,247,.22) inset}
+
+.hidden{display:none !important}
 
 /* Responsive */
 @media (max-width:640px){
