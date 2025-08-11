@@ -132,3 +132,13 @@ body{
 
 .footer{ text-align:center; color:var(--muted); margin-top: 28px }
 .footer a{ color:#caa8ff; text-decoration:none }
+.footer a:hover{ text-decoration:underline }
+
+@media (max-width:720px){
+  .countdown{ grid-template-columns: repeat(2, 1fr); }
+}
+
+.countdown::after{
+  content:""; position:absolute;
+  width:0; height:0;
+}
