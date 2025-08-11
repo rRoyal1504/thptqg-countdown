@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Đếm ngược THPTQG — Bao nhiêu ngày nữa đến kỳ thi?</title>
+  <meta name="description" content="Đếm ngược đến kỳ thi THPTQG: còn bao nhiêu ngày, giờ, phút, giây. Kèm một câu trích dẫn (quote) cảm hứng mỗi ngày." />
+
+  <meta property="og:title" content="Đếm ngược THPTQG — Bao nhiêu ngày nữa đến kỳ thi?" />
+  <meta property="og:description" content="Đếm ngược đến kỳ thi THPTQG và nhận một câu quote cảm hứng mỗi ngày." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://your-domain-or-gh-pages-site/favicon.png" />
+  <meta property="og:url" content="https://your-username.github.io/thptqg-countdown/" />
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebApplication",
+    "name":"Đếm ngược THPTQG",
+    "applicationCategory":"EducationApplication",
+    "operatingSystem":"Web",
+    "url":"https://your-username.github.io/thptqg-countdown/",
+    "description":"Đếm ngược đến kỳ thi THPTQG, hiển thị số ngày còn lại và quote cảm hứng mỗi ngày.",
+    "inLanguage":"vi"
+  }
+  </script>
+
+  <link rel="icon" href="favicon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://zenquotes.io">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <h1>Đếm ngược THPTQG</h1>
+      <p class="subtitle">Bao nhiêu ngày nữa đến kỳ thi THPT Quốc gia?</p>
+    </header>
+
+    <section class="controls">
+      <label for="examDate">Ngày thi (mặc định 25/06 hằng năm):</label>
+      <input id="examDate" type="date" />
+      <button id="saveDate">Lưu</button>
+      <small class="hint">Trang sẽ tự chuyển sang năm sau khi qua ngày thi.</small>
+    </section>
+
+    <section class="countdown">
+      <div class="cd-box">
+        <div id="cd-days" class="cd-num">--</div>
+        <div class="cd-label">Ngày</div>
+      </div>
+      <div class="cd-box">
+        <div id="cd-hours" class="cd-num">--</div>
+        <div class="cd-label">Giờ</div>
+      </div>
+      <div class="cd-box">
+        <div id="cd-mins" class="cd-num">--</div>
+        <div class="cd-label">Phút</div>
+      </div>
+      <div class="cd-box">
+        <div id="cd-secs" class="cd-num">--</div>
+        <div class="cd-label">Giây</div>
+      </div>
+    </section>
+
+    <p id="targetText" class="target">Mục tiêu: —</p>
+
+    <section class="quote">
+      <blockquote id="quoteText">Loading quote…</blockquote>
+      <cite id="quoteAuthor"></cite>
+      <button id="refreshQuote" title="Lấy quote mới">↻</button>
+    </section>
+
+    <footer class="footer">
+      <p>Made by <a href="https://your-portfolio-or-github">rRoyal</a> · Source on <a href="https://github.com/your-username/thptqg-countdown">GitHub</a></p>
+    </footer>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
