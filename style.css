@@ -32,6 +32,7 @@ body::before{
 
 .container{max-width:980px;margin:0 auto;padding:40px 20px 80px;position:relative;z-index:1}
 
+/* Hero */
 .hero h1{
   margin:0 0 6px;
   font-size:clamp(34px,6vw,56px);
@@ -44,6 +45,7 @@ body::before{
 }
 .subtitle{color:var(--text-dim);margin-top:8px;font-size:clamp(14px,2.4vw,18px)}
 
+/* Controls */
 .controls{
   margin-top:22px;padding:14px;border-radius:12px;
   background:var(--panel);border:1px solid var(--border);
@@ -61,6 +63,7 @@ body::before{
 }
 .controls .hint{color:var(--text-dim)}
 
+/* Countdown */
 .countdown{margin-top:26px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .cd-box{
   background:var(--panel);border:1px solid var(--border);
@@ -69,8 +72,10 @@ body::before{
 .cd-num{font-size:clamp(36px,6vw,56px);font-weight:900}
 .cd-label{color:var(--text-dim);font-weight:600;letter-spacing:.3px}
 
+/* Target */
 .target{margin-top:8px;color:var(--text-dim)}
 
+/* Quote */
 .quote{
   margin-top:22px;padding:16px;border-radius:12px;
   background:var(--panel);border:1px solid var(--border);position:relative
@@ -82,10 +87,12 @@ body::before{
   border:1px solid var(--border);border-radius:10px;padding:4px 8px;cursor:pointer
 }
 
+/* Footer */
 .footer{margin-top:28px;color:var(--text-dim)}
 .footer a{color:#c6b6ff}
 .footer.center{text-align:center}
 
+/* Callout floating */
 .callout{
   padding:12px 14px;border-radius:12px;background:var(--panel);
   border:1px solid var(--border);display:flex;gap:12px;align-items:flex-start
@@ -105,12 +112,14 @@ body::before{
 }
 .callout-fab:hover{transform:translateY(-2px);box-shadow:0 22px 60px rgba(0,0,0,.45),0 0 28px rgba(168,85,247,.22) inset}
 
+/* Responsive */
 @media (max-width:640px){
   .countdown{grid-template-columns:repeat(2,minmax(0,1fr))}
   .callout-fab{right:14px;bottom:14px;width:calc(100vw - 20px)}
-  .footer{padding-bottom:84px} 
+  .footer{padding-bottom:84px} /* chừa chỗ cho callout nổi */
 }
 
+/* Reduced motion */
 @media (prefers-reduced-motion:reduce){
   body::before{animation:none!important}
   .callout-fab,.callout-fab:hover{transition:none!important}
