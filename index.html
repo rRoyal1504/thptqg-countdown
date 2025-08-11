@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="vi">
-<!-- -- HEAD: META + SEO -- -->
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,8 +9,6 @@
   <meta property="og:title" content="Đếm ngược THPTQG 2026 + Tính điểm học bạ" />
   <meta property="og:description" content="Xem còn bao nhiêu ngày tới kỳ thi THPTQG 2026. Có link mở công cụ tính điểm học bạ." />
   <meta property="og:type" content="website" />
-
-  <!-- -- CSS -- -->
   <style>
     :root{
       --bg1:#0e1224; --bg2:#0b1020;
@@ -30,8 +27,6 @@
       min-height:100dvh; display:flex; flex-direction:column;
       position:relative; overflow-x:hidden;
     }
-
-    /* -- BACKGROUND -- */
     .bg-layer{
       position:fixed; inset:-10vmax; z-index:0; pointer-events:none;
       filter: blur(40px) saturate(120%);
@@ -53,62 +48,49 @@
     }
     @keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(2%, -2%, 0) scale(1.03)}}
     @keyframes drift2{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-2%, 2%, 0) scale(1.05)}}
-
-    /* -- LAYOUT -- */
     .container{
       max-width:980px; margin:0 auto; padding:40px 20px 88px;
       position:relative; z-index:1;
       flex:1; display:flex; flex-direction:column;
     }
-
-    /* -- HERO -- */
     .hero-title{ display:flex; align-items:center; gap:12px; margin:0 0 6px; white-space:nowrap; }
     .logo{font-size:clamp(28px,6vw,42px)}
     .title-text{
-      font-size:clamp(34px,6vw,56px);
+      font-size:clamp(28px,6vw,46px);
       font-weight:800; letter-spacing:.3px;
       background:linear-gradient(135deg,#bcd6ff 0%, #cdb3ff 45%, #f6b3d3 100%);
       -webkit-background-clip:text; -webkit-text-fill-color:transparent;
       filter:drop-shadow(0 0 12px rgba(168,85,247,.18));
+      text-align:center;
     }
-    .subtitle{color:var(--text-dim);margin-top:8px;font-size:clamp(14px,2.4vw,18px)}
-
-    /* -- CONTROLS  -- */
+    .subtitle{color:var(--text-dim);margin-top:8px;font-size:clamp(14px,2.4vw,18px);text-align:center}
     .controls{
       margin-top:22px;padding:14px;border-radius:12px;
       background:var(--panel);border:1px solid var(--border);
-      display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center
+      display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center;justify-content:center
     }
     .controls label{color:var(--text-dim)}
     .controls input[type=date]{
       background:#121833;color:var(--text);border:1px solid var(--border);
-      padding:8px 10px;border-radius:10px;outline:none;font-size:1rem
+      padding:8px 10px;border-radius:10px;outline:none;font-size:1rem;width:100%;max-width:220px
     }
     .controls button{
       background:linear-gradient(135deg,var(--accent),var(--accent2));
       color:#fff;border:none;padding:9px 14px;border-radius:12px;
       font-weight:700;cursor:pointer;font-size:1rem
     }
-    .controls .hint{color:var(--text-dim);font-size:.9rem}
-
-    /* -- COUNTDOWN -- */
+    .controls .hint{color:var(--text-dim);font-size:.9rem;width:100%;text-align:center}
     .countdown{margin-top:26px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
     .cd-box{ background:var(--panel);border:1px solid var(--border); padding:22px;border-radius:14px;text-align:center }
     .cd-num{font-size:clamp(36px,6vw,56px);font-weight:900}
     .cd-label{color:var(--text-dim);font-weight:600;letter-spacing:.3px}
-
-    /* -- QUOTE -- */
     .quote{ margin-top:22px;padding:16px;border-radius:12px; background:var(--panel);border:1px solid var(--border);position:relative }
     .quote blockquote{margin:0 0 8px;font-size:1.05rem}
     .quote cite{color:var(--text-dim);font-style:normal}
     #refreshQuote{ position:absolute;right:10px;top:10px;background:#121833;color:#fff; border:1px solid var(--border);border-radius:10px;padding:4px 8px;cursor:pointer }
-
-    /* -- FOOTER -- */
     .footer{margin-top:auto;color:var(--text-dim)}
     .footer a{color:#c6b6ff}
     .footer.center{text-align:center}
-
-    /* -- CALLOUT  -- */
     .callout{
       padding:12px 14px;border-radius:12px;background:var(--panel);
       border:1px solid var(--border);display:flex;gap:12px;align-items:flex-start;
@@ -135,13 +117,12 @@
     }
     .callout-fab:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(0,0,0,.45),0 0 28px rgba(168,85,247,.22) inset}
     .hidden{display:none !important}
-
-    /* -- RESPONSIVE -- */
     @media (max-width:640px){
       .countdown{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .footer{padding-bottom:84px}  /* chừa chỗ callout */
+      .footer{padding-bottom:84px}
       .controls{flex-direction:column;align-items:stretch}
       .controls label{text-align:left;width:100%}
+      .hero-title{flex-direction:column;align-items:center}
     }
     @media (prefers-reduced-motion:reduce){
       .bg-blobs, .bg-blobs::after{animation:none!important}
@@ -149,14 +130,9 @@
     }
   </style>
 </head>
-
-<!-- -- BODY: UI -- -->
 <body>
-  <!-- -- BACKGROUND LAYER -- -->
   <div class="bg-layer"><div class="bg-blobs"></div></div>
-
   <main class="container">
-    <!-- -- HERO -- -->
     <header class="hero">
       <h1 class="hero-title">
         <span class="logo" aria-hidden="true">⏳</span>
@@ -164,67 +140,40 @@
       </h1>
       <p class="subtitle">Xem còn bao nhiêu <strong>ngày, giờ, phút, giây</strong> đến kỳ thi quan trọng.</p>
     </header>
-
-    <!-- -- CONTROLS -- -->
-    <section class="controls" aria-label="Thiết lập ngày thi">
+    <section class="controls">
       <label for="examDate">Ngày thi (mặc định 25/06 hằng năm):</label>
       <input id="examDate" type="date" />
       <button id="saveDate">Lưu</button>
       <small class="hint">Trang sẽ tự chuyển sang năm sau sau khi qua ngày thi.</small>
     </section>
-
-    <!-- -- COUNTDOWN -- -->
-    <section class="countdown" aria-live="polite">
-      <div class="cd-box">
-        <div id="cd-days" class="cd-num">--</div>
-        <div class="cd-label">Ngày</div>
-      </div>
-      <div class="cd-box">
-        <div id="cd-hours" class="cd-num">--</div>
-        <div class="cd-label">Giờ</div>
-      </div>
-      <div class="cd-box">
-        <div id="cd-mins" class="cd-num">--</div>
-        <div class="cd-label">Phút</div>
-      </div>
-      <div class="cd-box">
-        <div id="cd-secs" class="cd-num">--</div>
-        <div class="cd-label">Giây</div>
-      </div>
+    <section class="countdown">
+      <div class="cd-box"><div id="cd-days" class="cd-num">--</div><div class="cd-label">Ngày</div></div>
+      <div class="cd-box"><div id="cd-hours" class="cd-num">--</div><div class="cd-label">Giờ</div></div>
+      <div class="cd-box"><div id="cd-mins" class="cd-num">--</div><div class="cd-label">Phút</div></div>
+      <div class="cd-box"><div id="cd-secs" class="cd-num">--</div><div class="cd-label">Giây</div></div>
     </section>
-
-    <!-- -- QUOTE -- -->
-    <section class="quote" aria-label="Quote cảm hứng">
+    <section class="quote">
       <blockquote id="quoteText">Loading quote…</blockquote>
       <cite id="quoteAuthor"></cite>
-      <button id="refreshQuote" title="Lấy quote mới" aria-label="Lấy quote mới">↻</button>
+      <button id="refreshQuote">↻</button>
     </section>
-
-    <!-- -- FOOTER -- -->
     <footer class="footer center">
       <p>Made by <a href="https://github.com/rroyal1504" rel="noopener">rRoyal</a> · Source on <a href="https://github.com/rroyal1504/thptqg-countdown" rel="noopener">GitHub</a></p>
     </footer>
   </main>
-
-  <!-- -- CALLOUT -- -->
-  <aside class="callout callout-fab" id="hocbaCallout" aria-live="polite">
-    <button class="callout-close" id="closeCallout" aria-label="Đóng callout">✕</button>
+  <aside class="callout callout-fab" id="hocbaCallout">
+    <button class="callout-close" id="closeCallout">✕</button>
     <div class="icn">📌</div>
     <div class="content">
-      <strong> Cần tính điểm học bạ?</strong><br/>
+      <strong>Cần tính điểm học bạ?</strong><br/>
       <a class="link" href="https://rroyal1504.github.io/hocba-calculator/" target="_blank" rel="noopener">→ Click để mở!</a>
       <span class="badge">mới</span>
     </div>
   </aside>
-
-  <!-- -- SCRIPT -- -->
   <script>
-    // ===== Helpers =====
     const $ = (sel) => document.querySelector(sel);
     const toISODateInput = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     const fromISODateInput = (v) => { const [y,m,d]=v.split('-').map(Number); return new Date(y,m-1,d); };
-
-    // ===== Exam date state =====
     const DATE_KEY='thptqg_exam_date_iso';
     const dateInput=$('#examDate'); const saveBtn=$('#saveDate');
     function defaultExamDate(){ const now=new Date(); const d=new Date(now.getFullYear(),5,25); if(now>d)d.setFullYear(d.getFullYear()+1); return d; }
@@ -232,11 +181,7 @@
     function saveExamDate(d){ try{ localStorage.setItem(DATE_KEY,toISODateInput(d)); }catch{} }
     let examDate=loadExamDate();
     if(dateInput) dateInput.value=toISODateInput(examDate);
-    if(saveBtn && dateInput){
-      saveBtn.addEventListener('click',()=>{ const v=dateInput.value; if(!v) return; examDate=fromISODateInput(v); saveExamDate(examDate); });
-    }
-
-    // ===== Countdown =====
+    if(saveBtn && dateInput){ saveBtn.addEventListener('click',()=>{ const v=dateInput.value; if(!v) return; examDate=fromISODateInput(v); saveExamDate(examDate); }); }
     const dEl=$('#cd-days'), hEl=$('#cd-hours'), mEl=$('#cd-mins'), sEl=$('#cd-secs');
     function tick(){
       const now=new Date();
@@ -257,8 +202,6 @@
       sEl.textContent=secs.toString().padStart(2,'0');
     }
     tick(); setInterval(tick,1000);
-
-    // ===== Quotes  =====
     const quoteText=$('#quoteText'); const quoteAuthor=$('#quoteAuthor'); const refreshBtn=$('#refreshQuote');
     const QUOTE_KEY='thptqg_quote_cache_v2';
     function renderQuote(q){ if(!quoteText||!quoteAuthor) return; const text=q.q||q.quote||""; const author=q.a||q.author||"Unknown"; quoteText.textContent=`“${text}”`; quoteAuthor.textContent=`— ${author}`; }
@@ -280,8 +223,6 @@
     }
     if(refreshBtn) refreshBtn.addEventListener('click',()=>fetchQuote(true));
     fetchQuote();
-
-    // ===== Callout=====
     const callout=document.getElementById('hocbaCallout');
     const closeCalloutBtn=document.getElementById('closeCallout');
     if(closeCalloutBtn && callout){
