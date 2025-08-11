@@ -11,7 +11,7 @@
   <meta property="og:description" content="Xem còn bao nhiêu ngày tới kỳ thi THPTQG 2026. Có link mở công cụ tính điểm học bạ." />
   <meta property="og:type" content="website" />
 
-  <!-- -- CSS (gộp) -- -->
+  <!-- -- CSS  -- -->
   <style>
     :root{
       --bg1:#0e1224; --bg2:#0b1020;
@@ -31,7 +31,7 @@
       position:relative; overflow-x:hidden;
     }
 
-    /* -- BACKGROUND: hiệu ứng động nhẹ, mượt, tiết kiệm tài nguyên -- */
+    /* -- BACKGROUND -- */
     .bg-layer{
       position:fixed; inset:-10vmax; z-index:0; pointer-events:none;
       filter: blur(40px) saturate(120%);
@@ -76,7 +76,7 @@
     }
     .subtitle{color:var(--text-dim);margin-top:8px;font-size:clamp(14px,2.4vw,18px)}
 
-    /* -- CONTROLS (tùy chọn, có thể xoá – JS an toàn) -- */
+    /* -- CONTROLS  -- */
     .controls{
       margin-top:22px;padding:14px;border-radius:12px;
       background:var(--panel);border:1px solid var(--border);
@@ -120,7 +120,7 @@
     .footer a{color:#c6b6ff}
     .footer.center{text-align:center}
 
-    /* -- CALLOUT (góc dưới phải) -- */
+    /* -- CALLOUT  -- */
     .callout{
       padding:12px 14px;border-radius:12px;background:var(--panel);
       border:1px solid var(--border);display:flex;gap:12px;align-items:flex-start;
@@ -176,7 +176,7 @@
       <p class="subtitle">Xem còn bao nhiêu <strong>ngày, giờ, phút, giây</strong> đến kỳ thi quan trọng.</p>
     </header>
 
-    <!-- -- CONTROLS (tuỳ chọn) -- -->
+    <!-- -- CONTROLS -- -->
     <section class="controls" aria-label="Thiết lập ngày thi">
       <label for="examDate">Ngày thi (mặc định 25/06 hằng năm):</label>
       <input id="examDate" type="date" />
@@ -228,14 +228,14 @@
     </div>
   </aside>
 
-  <!-- -- SCRIPT (gộp) -- -->
+  <!-- -- SCRIPT -- -->
   <script>
     // ===== Helpers =====
     const $ = (sel) => document.querySelector(sel);
     const toISODateInput = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     const fromISODateInput = (v) => { const [y,m,d]=v.split('-').map(Number); return new Date(y,m-1,d); };
 
-    // ===== Exam date state (không phụ thuộc phần tử nào) =====
+    // ===== Exam date state  =====
     const DATE_KEY='thptqg_exam_date_iso';
     const dateInput=$('#examDate'); const saveBtn=$('#saveDate');
     function defaultExamDate(){ const now=new Date(); const d=new Date(now.getFullYear(),5,25); if(now>d)d.setFullYear(d.getFullYear()+1); return d; }
