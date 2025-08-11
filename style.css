@@ -126,3 +126,74 @@ body {
 @media (max-width: 640px){
   .countdown { grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
+
+/* ===== Background nhẹ nhàng ===== */
+body {
+  position: relative;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  pointer-events: none;
+  background:
+    radial-gradient(800px 500px at 15% 10%, rgba(168,85,247,.15), transparent 60%),
+    radial-gradient(700px 450px at 85% 20%, rgba(236,72,153,.10), transparent 60%),
+    radial-gradient(900px 600px at 50% 120%, rgba(80,180,255,.08), transparent 60%);
+  filter: blur(0.3px);
+  animation: breathe 18s ease-in-out infinite alternate;
+  z-index: 0;
+}
+@keyframes breathe {
+  from { transform: scale(1); opacity: .8; }
+  to   { transform: scale(1.04); opacity: 1; }
+}
+
+/* container phía trên background */
+.container { position: relative; z-index: 1; }
+
+/* ===== Title & subtitle lớn hơn ===== */
+.hero h1 {
+  font-size: clamp(34px, 6vw, 56px); /* to hơn */
+}
+.subtitle { font-size: clamp(14px, 2.4vw, 18px); }
+
+/* ===== Bộ đếm to hơn ===== */
+.countdown { gap: 16px; }
+.cd-box { padding: 22px; }
+.cd-num { font-size: clamp(36px, 6vw, 56px); }   /* to hơn */
+.cd-label { font-size: clamp(12px, 1.8vw, 14px); }
+
+/* ===== Footer giữa ===== */
+.footer.center { text-align: center; }
+
+/* ===== Callout nổi góc dưới-phải ===== */
+.callout-fab {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: min(360px, calc(100vw - 32px));
+  z-index: 40;
+  box-shadow: 0 18px 50px rgba(0,0,0,.35),
+              0 0 20px rgba(168,85,247,.18) inset;
+  backdrop-filter: blur(10px) saturate(140%);
+  transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+.callout-fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 60px rgba(0,0,0,.45),
+              0 0 28px rgba(168,85,247,.22) inset;
+}
+
+/* Đừng che mất nội dung ở đáy trên mobile */
+@media (max-width: 640px){
+  .callout-fab { right: 14px; bottom: 14px; width: calc(100vw - 20px); }
+  .footer { padding-bottom: 84px; } /* chừa chỗ cho callout nổi */
+}
+
+/* Tôn trọng reduced motion */
+@media (prefers-reduced-motion: reduce){
+  body::before { animation: none !important; }
+  .callout-fab, .callout-fab:hover { transition: none !important; }
+}
+
