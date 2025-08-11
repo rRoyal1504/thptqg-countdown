@@ -11,7 +11,7 @@
   <meta property="og:description" content="Xem còn bao nhiêu ngày tới kỳ thi THPTQG 2026. Có link mở công cụ tính điểm học bạ." />
   <meta property="og:type" content="website" />
 
-  <!-- -- CSS (gộp) -- -->
+  <!-- -- CSS -- -->
   <style>
     :root{
       --bg1:#0e1224; --bg2:#0b1020;
@@ -31,7 +31,7 @@
       position:relative; overflow-x:hidden;
     }
 
-    /* -- BACKGROUND động nhẹ -- */
+    /* -- BACKGROUND -- */
     .bg-layer{
       position:fixed; inset:-10vmax; z-index:0; pointer-events:none;
       filter: blur(40px) saturate(120%);
@@ -73,7 +73,7 @@
     }
     .subtitle{color:var(--text-dim);margin-top:8px;font-size:clamp(14px,2.4vw,18px)}
 
-    /* -- CONTROLS (có thể xoá – JS an toàn) -- */
+    /* -- CONTROLS  -- */
     .controls{
       margin-top:22px;padding:14px;border-radius:12px;
       background:var(--panel);border:1px solid var(--border);
@@ -108,7 +108,7 @@
     .footer a{color:#c6b6ff}
     .footer.center{text-align:center}
 
-    /* -- CALLOUT (góc dưới phải) -- */
+    /* -- CALLOUT  -- */
     .callout{
       padding:12px 14px;border-radius:12px;background:var(--panel);
       border:1px solid var(--border);display:flex;gap:12px;align-items:flex-start;
@@ -165,7 +165,7 @@
       <p class="subtitle">Xem còn bao nhiêu <strong>ngày, giờ, phút, giây</strong> đến kỳ thi quan trọng.</p>
     </header>
 
-    <!-- -- CONTROLS (tuỳ chọn) -- -->
+    <!-- -- CONTROLS -- -->
     <section class="controls" aria-label="Thiết lập ngày thi">
       <label for="examDate">Ngày thi (mặc định 25/06 hằng năm):</label>
       <input id="examDate" type="date" />
@@ -206,7 +206,7 @@
     </footer>
   </main>
 
-  <!-- -- CALLOUT NỔI: “Bạn cần tính điểm học bạ? →” -- -->
+  <!-- -- CALLOUT -- -->
   <aside class="callout callout-fab" id="hocbaCallout" aria-live="polite">
     <button class="callout-close" id="closeCallout" aria-label="Đóng callout">✕</button>
     <div class="icn">📌</div>
@@ -217,7 +217,7 @@
     </div>
   </aside>
 
-  <!-- -- SCRIPT (gộp) -- -->
+  <!-- -- SCRIPT -- -->
   <script>
     // ===== Helpers =====
     const $ = (sel) => document.querySelector(sel);
@@ -258,7 +258,7 @@
     }
     tick(); setInterval(tick,1000);
 
-    // ===== Quotes (ZenQuotes + cache theo ngày) =====
+    // ===== Quotes  =====
     const quoteText=$('#quoteText'); const quoteAuthor=$('#quoteAuthor'); const refreshBtn=$('#refreshQuote');
     const QUOTE_KEY='thptqg_quote_cache_v2';
     function renderQuote(q){ if(!quoteText||!quoteAuthor) return; const text=q.q||q.quote||""; const author=q.a||q.author||"Unknown"; quoteText.textContent=`“${text}”`; quoteAuthor.textContent=`— ${author}`; }
@@ -281,12 +281,12 @@
     if(refreshBtn) refreshBtn.addEventListener('click',()=>fetchQuote(true));
     fetchQuote();
 
-    // ===== Callout: tắt tạm thời (KHÔNG lưu localStorage) =====
+    // ===== Callout=====
     const callout=document.getElementById('hocbaCallout');
     const closeCalloutBtn=document.getElementById('closeCallout');
     if(closeCalloutBtn && callout){
       closeCalloutBtn.addEventListener('click', () => {
-        callout.classList.add('hidden'); // ẩn tạm, refresh là xuất hiện lại
+        callout.classList.add('hidden'); 
       });
     }
   </script>
