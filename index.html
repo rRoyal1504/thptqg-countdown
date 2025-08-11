@@ -4,68 +4,59 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Đếm ngược thi THPTQG 2026 ⏳ + Tính điểm học bạ 3 năm cấp 3</title>
-  <meta name="description" content="Công cụ đếm ngược THPTQG 2026 + quote mỗi ngày. Có thể chỉnh ngày thi, callout tính điểm học bạ, nền nhẹ nhàng." />
+  <title>Đếm ngược thi THPTQG 2026 ⏳ + Tính điểm học bạ</title>
+  <meta name="description" content="Đếm ngược kỳ thi THPT Quốc Gia 2026: ngày, giờ, phút, giây. Callout chuyển sang công cụ tính điểm học bạ." />
   <meta name="keywords" content="đếm ngược thptqg, countdown thpt, tính điểm học bạ" />
-
-  <!-- -- Open Graph -- -->
   <meta property="og:title" content="Đếm ngược THPTQG 2026 + Tính điểm học bạ" />
-  <meta property="og:description" content="Xem còn bao nhiêu ngày tới kỳ thi THPT Quốc Gia 2026. Có quote ngày." />
+  <meta property="og:description" content="Xem còn bao nhiêu ngày tới kỳ thi THPTQG 2026. Có link mở công cụ tính điểm học bạ." />
   <meta property="og:type" content="website" />
 
-  <!-- -- JSON-LD -- -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"WebApplication",
-    "name":"Đếm ngược THPTQG",
-    "description":"Đếm ngược thi THPT Quốc Gia và tính điểm học bạ 3 năm.",
-    "applicationCategory":"EducationApplication",
-    "operatingSystem":"Web",
-    "url":"https://example.com",
-    "inLanguage":"vi"
-  }
-  </script>
-
-  <!-- -- CSS -- -->
+  <!-- -- CSS (gộp) -- -->
   <style>
     :root{
       --bg1:#0e1224; --bg2:#0b1020;
       --panel:rgba(255,255,255,.06);
       --border:rgba(255,255,255,.14);
-      --accent:#a855f7;
-      --accent2:#ec4899;
+      --accent:#a855f7; --accent2:#ec4899;
       --text:#eef1ff; --text-dim:#c9cbe8;
     }
-
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
       font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
       color:var(--text);
-      background:
-        radial-gradient(1200px 700px at 20% -20%, #1d1f42 0%, transparent 60%),
-        radial-gradient(900px 600px at 120% 20%, #1a1438 0%, transparent 55%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-      position:relative;
-
-      min-height:100dvh;
-      display:flex; flex-direction:column;
+      background:linear-gradient(180deg,var(--bg1),var(--bg2));
+      min-height:100dvh; display:flex; flex-direction:column;
+      position:relative; overflow-x:hidden;
     }
-    body::before{
-      content:"";
-      position:fixed; inset:-20%; pointer-events:none; z-index:0;
-      background:
-        radial-gradient(800px 500px at 15% 10%, rgba(168,85,247,.14), transparent 60%),
-        radial-gradient(700px 450px at 85% 20%, rgba(236,72,153,.10), transparent 60%),
-        radial-gradient(900px 600px at 50% 120%, rgba(80,180,255,.07), transparent 60%);
-      animation:breathe 18s ease-in-out infinite alternate;
-    }
-    @keyframes breathe{from{transform:scale(1);opacity:.85}to{transform:scale(1.04);opacity:1}}
 
+    /* -- BACKGROUND: hiệu ứng động nhẹ, mượt, tiết kiệm tài nguyên -- */
+    .bg-layer{
+      position:fixed; inset:-10vmax; z-index:0; pointer-events:none;
+      filter: blur(40px) saturate(120%);
+    }
+    .bg-blobs{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(28vmax 20vmax at 10% 0%, rgba(168,85,247,.18), transparent 60%),
+        radial-gradient(24vmax 18vmax at 95% 15%, rgba(236,72,153,.14), transparent 60%),
+        radial-gradient(30vmax 24vmax at 50% 110%, rgba(77,171,247,.10), transparent 60%);
+      animation: drift 22s ease-in-out infinite alternate;
+    }
+    .bg-blobs::after{
+      content:""; position:absolute; inset:0;
+      background:
+        radial-gradient(16vmax 12vmax at 20% 80%, rgba(168,85,247,.10), transparent 70%),
+        radial-gradient(18vmax 14vmax at 80% 70%, rgba(236,72,153,.08), transparent 70%);
+      animation: drift2 32s ease-in-out infinite alternate;
+    }
+    @keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(2%, -2%, 0) scale(1.03)}}
+    @keyframes drift2{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-2%, 2%, 0) scale(1.05)}}
+
+    /* -- LAYOUT -- */
     .container{
-      max-width:980px;margin:0 auto;padding:40px 20px 80px;
+      max-width:980px; margin:0 auto; padding:40px 20px 88px;
       position:relative; z-index:1;
       flex:1; display:flex; flex-direction:column;
     }
@@ -73,21 +64,19 @@
     /* -- HERO -- */
     .hero-title{
       display:flex; align-items:center; gap:12px;
-      margin:0 0 6px;
-      white-space:nowrap;
+      margin:0 0 6px; white-space:nowrap;
     }
     .logo{font-size:clamp(28px,6vw,42px)}
     .title-text{
       font-size:clamp(34px,6vw,56px);
       font-weight:800; letter-spacing:.3px;
-      /* Gradient NHẸ nhàng */
-      background:linear-gradient(135deg,#b9d6ff 0%, #cdb3ff 45%, #f6b3d3 100%);
+      background:linear-gradient(135deg,#bcd6ff 0%, #cdb3ff 45%, #f6b3d3 100%);
       -webkit-background-clip:text; -webkit-text-fill-color:transparent;
       filter:drop-shadow(0 0 12px rgba(168,85,247,.18));
     }
     .subtitle{color:var(--text-dim);margin-top:8px;font-size:clamp(14px,2.4vw,18px)}
 
-    /* -- CONTROLS -- */
+    /* -- CONTROLS (tùy chọn, có thể xoá – JS an toàn) -- */
     .controls{
       margin-top:22px;padding:14px;border-radius:12px;
       background:var(--panel);border:1px solid var(--border);
@@ -131,7 +120,7 @@
     .footer a{color:#c6b6ff}
     .footer.center{text-align:center}
 
-    /* -- CALLOUT -- */
+    /* -- CALLOUT (góc dưới phải) -- */
     .callout{
       padding:12px 14px;border-radius:12px;background:var(--panel);
       border:1px solid var(--border);display:flex;gap:12px;align-items:flex-start;
@@ -158,15 +147,15 @@
     .callout-fab:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(0,0,0,.45),0 0 28px rgba(168,85,247,.22) inset}
     .hidden{display:none !important}
 
-    /* -- Responsive -- */
+    /* -- RESPONSIVE -- */
     @media (max-width:640px){
       .countdown{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .footer{padding-bottom:74px} /* chừa chỗ callout nổi */
+      .footer{padding-bottom:74px}  /* chừa chỗ callout */
       .controls{flex-direction:column;align-items:stretch}
       .controls label{text-align:left;width:100%}
     }
     @media (prefers-reduced-motion:reduce){
-      body::before{animation:none!important}
+      .bg-blobs, .bg-blobs::after{animation:none!important}
       .callout-fab,.callout-fab:hover{transition:none!important}
     }
   </style>
@@ -174,7 +163,11 @@
 
 <!-- -- BODY: UI -- -->
 <body>
+  <!-- -- BACKGROUND LAYER -- -->
+  <div class="bg-layer"><div class="bg-blobs"></div></div>
+
   <main class="container">
+    <!-- -- HERO -- -->
     <header class="hero">
       <h1 class="hero-title">
         <span class="logo" aria-hidden="true">⏳</span>
@@ -183,7 +176,7 @@
       <p class="subtitle">Xem còn bao nhiêu <strong>ngày, giờ, phút, giây</strong> đến kỳ thi quan trọng.</p>
     </header>
 
-    <!-- -- CONTROLS -- -->
+    <!-- -- CONTROLS (tuỳ chọn) -- -->
     <section class="controls" aria-label="Thiết lập ngày thi">
       <label for="examDate">Ngày thi (mặc định 25/06 hằng năm):</label>
       <input id="examDate" type="date" />
@@ -220,38 +213,38 @@
 
     <!-- -- FOOTER -- -->
     <footer class="footer center">
-      <p>Made by <a href="#" rel="noopener">rRoyal</a> · Source on <a href="#" rel="noopener">GitHub</a></p>
+      <p>Made by <a href="https://github.com/rroyal1504" rel="noopener">rRoyal</a> · Source on <a href="https://github.com/rroyal1504/thptqg-countdown" rel="noopener">GitHub</a></p>
     </footer>
   </main>
 
-  <!-- -- CALLOUT  -- -->
+  <!-- -- CALLOUT NỔI: “Bạn cần tính điểm học bạ? →” -- -->
   <aside class="callout callout-fab" id="hocbaCallout" aria-live="polite">
     <button class="callout-close" id="closeCallout" aria-label="Đóng callout">✕</button>
     <div class="icn">📌</div>
     <div class="content">
-      <strong>Công cụ tính điểm học bạ <span class="badge">mới</span></strong><br/>
-      Cần tính điểm xét tuyển đại học theo học bạ 3 năm cấp 3?
-      <a class="link" href="https://rroyal1504.github.io/hocba-calculator/" target="_blank" rel="noopener">Mở công cụ</a>.
+      <strong>📌 Bạn cần tính điểm học bạ?</strong><br/>
+      <a class="link" href="https://rroyal1504.github.io/hocba-calculator/" target="_blank" rel="noopener">→ Mở công cụ</a>
+      <span class="badge">mới</span>
     </div>
   </aside>
 
-  <!-- -- SCRIPT -- -->
+  <!-- -- SCRIPT (gộp) -- -->
   <script>
     // ===== Helpers =====
     const $ = (sel) => document.querySelector(sel);
-    function toISODateInput(d){const y=d.getFullYear();const m=String(d.getMonth()+1).padStart(2,'0');const day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`}
-    function fromISODateInput(v){const [y,m,d]=v.split('-').map(Number);return new Date(y,m-1,d)}
+    const toISODateInput = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const fromISODateInput = (v) => { const [y,m,d]=v.split('-').map(Number); return new Date(y,m-1,d); };
 
-    // ===== Exam date state  =====
+    // ===== Exam date state (không phụ thuộc phần tử nào) =====
     const DATE_KEY='thptqg_exam_date_iso';
     const dateInput=$('#examDate'); const saveBtn=$('#saveDate');
-    function defaultExamDate(){const now=new Date();const d=new Date(now.getFullYear(),5,25);if(now>d)d.setFullYear(d.getFullYear()+1);return d}
-    function loadExamDate(){const iso=localStorage.getItem(DATE_KEY);return iso?fromISODateInput(iso):defaultExamDate()}
-    function saveExamDate(d){try{localStorage.setItem(DATE_KEY,toISODateInput(d))}catch{}}
+    function defaultExamDate(){ const now=new Date(); const d=new Date(now.getFullYear(),5,25); if(now>d)d.setFullYear(d.getFullYear()+1); return d; }
+    function loadExamDate(){ const iso=localStorage.getItem(DATE_KEY); return iso?fromISODateInput(iso):defaultExamDate(); }
+    function saveExamDate(d){ try{ localStorage.setItem(DATE_KEY,toISODateInput(d)); }catch{} }
     let examDate=loadExamDate();
     if(dateInput) dateInput.value=toISODateInput(examDate);
     if(saveBtn && dateInput){
-      saveBtn.addEventListener('click',()=>{const v=dateInput.value;if(!v)return;examDate=fromISODateInput(v);saveExamDate(examDate);});
+      saveBtn.addEventListener('click',()=>{ const v=dateInput.value; if(!v) return; examDate=fromISODateInput(v); saveExamDate(examDate); });
     }
 
     // ===== Countdown =====
