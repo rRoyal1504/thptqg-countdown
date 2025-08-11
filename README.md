@@ -1,22 +1,22 @@
 # THPTQG Countdown ⏳
 
-Đếm ngược đến kỳ thi THPT Quốc gia: **bao nhiêu ngày/giờ/phút/giây còn lại**, kèm **một câu quote cảm hứng mỗi ngày** (ZenQuotes) cho các bạn trẻ có mục tiêu cao trong kì thi quyết định 12 năm đèn sách !
+Đếm ngược đến kỳ thi THPT Quốc gia: **bao nhiêu ngày/giờ/phút/giây còn lại**, kèm **một câu quote truyền cảm hứng mỗi ngày** (ZenQuotes) để tiếp thêm động lực cho hành trình 12 năm đèn sách!
 
-- Live: https://rroyal1504.github.io/thptqg-countdown/
-- API quotes: https://zenquotes.io/
+- **Live:** https://rroyal1504.github.io/thptqg-countdown/
+- **API quotes:** https://zenquotes.io/
 
 ## Features
-- ✅ Auto-switch to next year after exam day
-- ✅ Change target date & remember it (localStorage)
-- ✅ Daily quote with caching (1 request/day)
-- ✅ Lightweight, fast, mobile-friendly
-- ✅ SEO-friendly (OG tags + JSON-LD)
+- ✅ Tự động chuyển sang **năm kế tiếp** sau khi qua ngày thi
+- ✅ Cho phép **đổi ngày thi** và **ghi nhớ** (localStorage)
+- ✅ **Quote mỗi ngày** với cơ chế cache (chỉ 1 request/ngày)
+- ✅ Gọn nhẹ, **load nhanh**, tối ưu cho **mobile**
+- ✅ Thân thiện SEO (**OG tags + JSON-LD**)
 
 ## Run locally
-Just open `index.html` in your browser.
+Chỉ cần mở file `index.html` bằng trình duyệt là chạy.
 
 ## Deploy (GitHub Pages)
-1. Create repo `thptqg-countdown`.
+1. Tạo repo `thptqg-countdown`.
 2. Push code:
    ```bash
    git init
