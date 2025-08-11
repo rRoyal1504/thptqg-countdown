@@ -3,39 +3,35 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
-  <title>Đếm ngược thi THPTQG 2026 ⏳ + Tính điểm học bạ 3 năm cấp 3</title>
-  <meta name="description" content="Công cụ đếm ngược kỳ thi THPT Quốc Gia 2026: xem còn bao nhiêu ngày, giờ, phút, giây. Kèm công cụ tính điểm học bạ 3 năm cấp 3 cho học sinh lớp 12 chuẩn bị xét tuyển." />
-  <meta name="keywords" content="đếm ngược thptqg, countdown thptqg, đếm ngược thi thpt quốc gia, thptqg countdown, tính điểm học bạ, học bạ 3 năm cấp 3" />
 
+  <title>Đếm ngược thi THPTQG 2026 ⏳ + Tính điểm học bạ 3 năm cấp 3</title>
+  <meta name="description" content="Công cụ đếm ngược kỳ thi THPT Quốc Gia 2026: xem còn bao nhiêu ngày, giờ, phút, giây. Kèm công cụ tính điểm học bạ 3 năm cấp 3 cho xét tuyển." />
+  <meta name="keywords" content="đếm ngược thptqg, countdown thptqg, đếm ngược thi thpt quốc gia, thptqg countdown, tính điểm học bạ, học bạ cấp 3" />
+
+  <!-- Open Graph -->
   <meta property="og:title" content="Đếm ngược THPTQG 2026 + Tính điểm học bạ" />
-  <meta property="og:description" content="Xem còn bao nhiêu ngày tới kỳ thi THPT Quốc Gia 2026. Kèm công cụ tính điểm học bạ 3 năm cấp 3 cho xét tuyển đại học." />
+  <meta property="og:description" content="Xem còn bao nhiêu ngày tới kỳ thi THPT Quốc Gia 2026. Kèm công cụ tính điểm học bạ 3 năm cấp 3." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://rroyal1504.github.io/thptqg-countdown/cover.png" />
+  <meta property="og:image" content="cover.png" />
   <meta property="og:url" content="https://rroyal1504.github.io/thptqg-countdown/" />
 
-  <!-- Structured Data -->
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Đếm ngược THPTQG",
-    "description": "Công cụ đếm ngược thi THPT Quốc Gia và tính điểm học bạ 3 năm cấp 3.",
-    "applicationCategory": "EducationApplication",
-    "operatingSystem": "Web",
-    "url": "https://rroyal1504.github.io/thptqg-countdown/",
-    "inLanguage": "vi",
-    "creator": { "@type": "Person", "name": "Huynh Tuan Khoa" },
-    "featureList": [
-      "Đếm ngược kỳ thi THPT Quốc Gia",
-      "Tính điểm học bạ 3 năm cấp 3",
-      "Hiển thị câu quote cảm hứng mỗi ngày"
-    ]
+    "@context":"https://schema.org",
+    "@type":"WebApplication",
+    "name":"Đếm ngược THPTQG",
+    "description":"Đếm ngược thi THPT Quốc Gia và tính điểm học bạ 3 năm.",
+    "applicationCategory":"EducationApplication",
+    "operatingSystem":"Web",
+    "url":"https://rroyal1504.github.io/thptqg-countdown/",
+    "inLanguage":"vi"
   }
   </script>
 
   <link rel="icon" href="favicon.png" />
-  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="preconnect" href="https://zenquotes.io">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <main class="container">
@@ -44,14 +40,14 @@
       <p class="subtitle">Xem còn bao nhiêu <strong>ngày, giờ, phút, giây</strong> đến kỳ thi quan trọng nhất 12 năm đèn sách.</p>
     </header>
 
-    <section class="controls">
+    <section class="controls" aria-label="Thiết lập ngày thi">
       <label for="examDate">Ngày thi (mặc định 25/06 hằng năm):</label>
       <input id="examDate" type="date" />
       <button id="saveDate">Lưu</button>
       <small class="hint">Trang sẽ tự chuyển sang năm sau sau khi qua ngày thi.</small>
     </section>
 
-    <section id="countdown" class="countdown">
+    <section class="countdown" aria-live="polite">
       <div class="cd-box">
         <div id="cd-days" class="cd-num">--</div>
         <div class="cd-label">Ngày</div>
@@ -72,37 +68,26 @@
 
     <p id="targetText" class="target">Mục tiêu: —</p>
 
-    <section class="callout callout-fab" aria-labelledby="hocba-title">
-      <div class="icn">📌</div>
-      <div class="content">
-        <div id="hocba-title">
-          <strong>Công cụ tính điểm học bạ</strong>
-          <span class="badge">mới</span>
-        </div>
-        <div>
-          Cần tính điểm xét tuyển đại học theo học bạ 3 năm cấp 3?
-          <a class="link" href="https://rroyal1504.github.io/hocba-calculator/" target="_blank" rel="noopener">Mở công cụ</a>.
-        </div>
-      </div>
+    <section class="quote" aria-label="Quote cảm hứng">
+      <blockquote id="quoteText">Loading quote…</blockquote>
+      <cite id="quoteAuthor"></cite>
+      <button id="refreshQuote" title="Lấy quote mới" aria-label="Lấy quote mới">↻</button>
     </section>
 
     <footer class="footer center">
-      <p>Made by <a href="https://github.com/rroyal1504">rRoyal</a> · Source on
-         <a href="https://github.com/rroyal1504/thptqg-countdown">GitHub</a></p>
-    </footer>
-
-
-    <section class="quote">
-      <blockquote id="quoteText">Loading quote…</blockquote>
-      <cite id="quoteAuthor"></cite>
-      <button id="refreshQuote" title="Lấy quote mới">↻</button>
-    </section>
-
-    <footer class="footer">
-      <p>Made by <a href="https://github.com/rroyal1504">rRoyal</a> · Source on <a href="https://github.com/rroyal1504/thptqg-countdown">GitHub</a></p>
+      <p>Made by <a href="https://github.com/rroyal1504" rel="noopener">rRoyal</a> · Source on <a href="https://github.com/rroyal1504/thptqg-countdown" rel="noopener">GitHub</a></p>
     </footer>
   </main>
 
-  <script src="script.js?v=2" defer></script>
+  <!-- Callout nổi góc dưới-phải -->
+  <aside class="callout callout-fab" aria-live="polite">
+    <div class="icn">📌</div>
+    <div class="content">
+      <strong>Công cụ tính điểm học bạ <span class="badge">mới</span></strong><br/>
+      Cần tính điểm xét tuyển đại học theo học bạ 3 năm cấp 3? <a class="link" href="https://rroyal1504.github.io/hocba-calculator/" target="_blank" rel="noopener">Mở công cụ</a>.
+    </div>
+  </aside>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
