@@ -11,7 +11,7 @@
   <meta property="og:description" content="Xem còn bao nhiêu ngày tới kỳ thi THPTQG 2026. Có link mở công cụ tính điểm học bạ." />
   <meta property="og:type" content="website" />
 
-  <!-- -- CSS  -- -->
+  <!-- -- CSS -- -->
   <style>
     :root{
       --bg1:#0e1224; --bg2:#0b1020;
@@ -62,10 +62,7 @@
     }
 
     /* -- HERO -- */
-    .hero-title{
-      display:flex; align-items:center; gap:12px;
-      margin:0 0 6px; white-space:nowrap;
-    }
+    .hero-title{ display:flex; align-items:center; gap:12px; margin:0 0 6px; white-space:nowrap; }
     .logo{font-size:clamp(28px,6vw,42px)}
     .title-text{
       font-size:clamp(34px,6vw,56px);
@@ -96,31 +93,22 @@
 
     /* -- COUNTDOWN -- */
     .countdown{margin-top:26px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-    .cd-box{
-      background:var(--panel);border:1px solid var(--border);
-      padding:22px;border-radius:14px;text-align:center
-    }
+    .cd-box{ background:var(--panel);border:1px solid var(--border); padding:22px;border-radius:14px;text-align:center }
     .cd-num{font-size:clamp(36px,6vw,56px);font-weight:900}
     .cd-label{color:var(--text-dim);font-weight:600;letter-spacing:.3px}
 
     /* -- QUOTE -- */
-    .quote{
-      margin-top:22px;padding:16px;border-radius:12px;
-      background:var(--panel);border:1px solid var(--border);position:relative
-    }
+    .quote{ margin-top:22px;padding:16px;border-radius:12px; background:var(--panel);border:1px solid var(--border);position:relative }
     .quote blockquote{margin:0 0 8px;font-size:1.05rem}
     .quote cite{color:var(--text-dim);font-style:normal}
-    #refreshQuote{
-      position:absolute;right:10px;top:10px;background:#121833;color:#fff;
-      border:1px solid var(--border);border-radius:10px;padding:4px 8px;cursor:pointer
-    }
+    #refreshQuote{ position:absolute;right:10px;top:10px;background:#121833;color:#fff; border:1px solid var(--border);border-radius:10px;padding:4px 8px;cursor:pointer }
 
     /* -- FOOTER -- */
     .footer{margin-top:auto;color:var(--text-dim)}
     .footer a{color:#c6b6ff}
     .footer.center{text-align:center}
 
-    /* -- CALLOUT  -- */
+    /* -- CALLOUT -- */
     .callout{
       padding:12px 14px;border-radius:12px;background:var(--panel);
       border:1px solid var(--border);display:flex;gap:12px;align-items:flex-start;
@@ -139,7 +127,8 @@
     }
     .callout-close:hover{opacity:1}
     .callout-fab{
-      position:fixed;right:14px;bottom:14px;width:min(340px,calc(100vw - 20px));z-index:40;
+      position:fixed;right:14px;bottom:14px;width:min(340px,calc(100vw - 20px));
+      z-index:9999; /* đảm bảo nổi trên hết */
       box-shadow:0 14px 40px rgba(0,0,0,.35),0 0 20px rgba(168,85,247,.18) inset;
       backdrop-filter:blur(10px) saturate(140%);
       transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease
@@ -150,7 +139,7 @@
     /* -- RESPONSIVE -- */
     @media (max-width:640px){
       .countdown{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .footer{padding-bottom:74px}  /* chừa chỗ callout */
+      .footer{padding-bottom:84px}  /* chừa chỗ callout */
       .controls{flex-direction:column;align-items:stretch}
       .controls label{text-align:left;width:100%}
     }
@@ -176,7 +165,7 @@
       <p class="subtitle">Xem còn bao nhiêu <strong>ngày, giờ, phút, giây</strong> đến kỳ thi quan trọng.</p>
     </header>
 
-    <!-- -- CONTROLS -- -->
+    <!-- -- CONTROLS  -- -->
     <section class="controls" aria-label="Thiết lập ngày thi">
       <label for="examDate">Ngày thi (mặc định 25/06 hằng năm):</label>
       <input id="examDate" type="date" />
@@ -217,13 +206,13 @@
     </footer>
   </main>
 
-  <!-- -- CALLOUT NỔI: “Bạn cần tính điểm học bạ? →” -- -->
+  <!-- -- CALLOUT  -- -->
   <aside class="callout callout-fab" id="hocbaCallout" aria-live="polite">
     <button class="callout-close" id="closeCallout" aria-label="Đóng callout">✕</button>
     <div class="icn">📌</div>
     <div class="content">
-      <strong>📌 Bạn cần tính điểm học bạ?</strong><br/>
-      <a class="link" href="https://rroyal1504.github.io/hocba-calculator/" target="_blank" rel="noopener">→ Mở công cụ</a>
+      <strong>Cần tính điểm học bạ?</strong><br/>
+      <a class="link" href="https://rroyal1504.github.io/hocba-calculator/" target="_blank" rel="noopener">→ Mở cái này!</a>
       <span class="badge">mới</span>
     </div>
   </aside>
@@ -235,7 +224,7 @@
     const toISODateInput = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     const fromISODateInput = (v) => { const [y,m,d]=v.split('-').map(Number); return new Date(y,m-1,d); };
 
-    // ===== Exam date state  =====
+    // ===== Exam date state =====
     const DATE_KEY='thptqg_exam_date_iso';
     const dateInput=$('#examDate'); const saveBtn=$('#saveDate');
     function defaultExamDate(){ const now=new Date(); const d=new Date(now.getFullYear(),5,25); if(now>d)d.setFullYear(d.getFullYear()+1); return d; }
@@ -293,10 +282,15 @@
     fetchQuote();
 
     // ===== Callout close & remember =====
-    const CALLOUT_KEY='hocba_callout_closed_v1';
+    const CALLOUT_KEY='hocba_callout_closed_v2'; 
     const callout=document.getElementById('hocbaCallout');
     const closeCalloutBtn=document.getElementById('closeCallout');
-    (function initCallout(){ try{ const closed=localStorage.getItem(CALLOUT_KEY)==='1'; if(closed && callout) callout.classList.add('hidden'); }catch{} })();
+    (function initCallout(){ 
+      try{
+        const closed=localStorage.getItem(CALLOUT_KEY)==='1';
+        if(closed && callout) callout.classList.add('hidden');
+      }catch{}
+    })();
     if(closeCalloutBtn && callout){
       closeCalloutBtn.addEventListener('click',()=>{ try{localStorage.setItem(CALLOUT_KEY,'1');}catch{} callout.classList.add('hidden'); });
     }
