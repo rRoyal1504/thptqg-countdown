@@ -2,7 +2,7 @@
 
 Đếm ngược đến kỳ thi THPT Quốc gia: **bao nhiêu ngày/giờ/phút/giây còn lại**, kèm **một câu quote cảm hứng mỗi ngày** (ZenQuotes).
 
-- Live: https://your-username.github.io/thptqg-countdown/
+- Live: https://rroyal1504.github.io/thptqg-countdown/
 - API quotes: https://zenquotes.io/
 
 ## Features
