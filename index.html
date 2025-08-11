@@ -1,83 +1,128 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
-  <title>Đếm ngược thi THPTQG 2026 ⏳ + Tính điểm học bạ 3 năm cấp 3</title>
-  <meta name="description" content="Công cụ đếm ngược kỳ thi THPT Quốc Gia 2026: xem còn bao nhiêu ngày, giờ, phút, giây. Kèm công cụ tính điểm học bạ 3 năm cấp 3 cho học sinh lớp 12 chuẩn bị xét tuyển." />
-  <meta name="keywords" content="đếm ngược thptqg, countdown thptqg, đếm ngược thi thpt quốc gia, thptqg countdown, tính điểm học bạ, học bạ 3 năm cấp 3" />
+/* Nền & chữ */
+:root {
+  --bg1:#0e1224; --bg2:#0b1020;
+  --panel: rgba(255,255,255,.06);
+  --border: rgba(255,255,255,.14);
+  --accent:#a855f7; /* tím */
+  --accent2:#ec4899; /* hồng */
+  --text:#eef1ff; --text-dim:#c9cbe8;
+}
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Đếm ngược THPTQG 2026 + Tính điểm học bạ" />
-  <meta property="og:description" content="Xem còn bao nhiêu ngày tới kỳ thi THPT Quốc Gia 2026. Kèm công cụ tính điểm học bạ 3 năm cấp 3 cho xét tuyển đại học." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://rroyal1504.github.io/thptqg-countdown/cover.png" />
-  <meta property="og:url" content="https://rroyal1504.github.io/thptqg-countdown/" />
+* { box-sizing: border-box; }
+html,body { height:100%; }
+body {
+  margin:0;
+  font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+  color: var(--text);
+  background:
+    radial-gradient(1200px 700px at 20% -20%, #1d1f42 0%, transparent 60%),
+    radial-gradient(900px 600px at 120% 20%, #1a1438 0%, transparent 55%),
+    linear-gradient(180deg, var(--bg1), var(--bg2));
+}
 
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Đếm ngược THPTQG",
-    "description": "Công cụ đếm ngược thi THPT Quốc Gia và tính điểm học bạ 3 năm cấp 3.",
-    "applicationCategory": "EducationApplication",
-    "operatingSystem": "Web",
-    "url": "https://rroyal1504.github.io/thptqg-countdown/",
-    "inLanguage": "vi",
-    "creator": {
-      "@type": "Person",
-      "name": "Huynh Tuan Khoa"
-    },
-    "featureList": [
-      "Đếm ngược kỳ thi THPT Quốc Gia",
-      "Tính điểm học bạ 3 năm cấp 3",
-      "Hiển thị câu quote cảm hứng mỗi ngày"
-    ]
-  }
-  </script>
+/* Layout */
+.container {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
 
-  <link rel="icon" href="favicon.png" />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <main>
-    <header>
-      <h1>⏳ Đếm ngược thi THPT Quốc Gia 2026</h1>
-      <p>Xem còn bao nhiêu <strong>ngày, giờ, phút, giây</strong> đến kỳ thi quan trọng nhất 12 năm đèn sách.</p>
-    </header>
+.hero h1 {
+  margin: 0 0 6px;
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 800;
+  letter-spacing: .3px;
+  background: linear-gradient(135deg, #6ee7ff, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 16px rgba(168,85,247,.25));
+}
+.subtitle { color: var(--text-dim); margin-top:8px; }
 
-    <section>
-      <label for="examDate">Ngày thi (mặc định 25/06 hằng năm):</label>
-      <input id="examDate" type="date" />
-      <button id="saveDate">Lưu</button>
-    </section>
+/* Controls */
+.controls {
+  margin-top: 22px;
+  padding: 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: center;
+}
+.controls label { color: var(--text-dim); }
+.controls input[type="date"] {
+  background: #121833;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  border-radius: 10px;
+  outline: none;
+}
+.controls button {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff; border: none; padding: 9px 14px; border-radius: 12px;
+  font-weight: 700; cursor: pointer;
+}
+.controls .hint { color: var(--text-dim); }
 
-    <section id="countdown">
-      <div><span id="cd-days">--</span> Ngày</div>
-      <div><span id="cd-hours">--</span> Giờ</div>
-      <div><span id="cd-mins">--</span> Phút</div>
-      <div><span id="cd-secs">--</span> Giây</div>
-    </section>
+/* Countdown */
+.countdown {
+  margin-top: 26px;
+  display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px;
+}
+.cd-box {
+  background: var(--panel); border:1px solid var(--border);
+  padding: 16px; border-radius: 14px; text-align: center;
+}
+.cd-num { font-size: clamp(28px, 5vw, 44px); font-weight: 900; }
+.cd-label { color: var(--text-dim); font-weight: 600; letter-spacing:.3px }
 
-    <p id="targetText">Mục tiêu: —</p>
+.target { margin-top: 8px; color: var(--text-dim); }
 
-    <section>
-      <h2>📌 Công cụ tính điểm học bạ</h2>
-      <p>Nếu bạn cần tính điểm xét tuyển đại học dựa trên học bạ 3 năm cấp 3, hãy thử <a href="https://rroyal1504.github.io/hocba-calculator/" target="_blank">Công cụ tính điểm học bạ</a>.</p>
-    </section>
+/* Callout nhỏ cho học bạ */
+.callout {
+  max-width: 780px;
+  margin: 24px 0 6px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.callout .icn { font-size: 18px; line-height: 1; opacity: .85; }
+.callout .content { font-size: .95rem; color: var(--text-dim); }
+.callout .content strong { color: var(--text); }
+.callout a.link {
+  color: #e8d5ff; text-decoration: none;
+  border-bottom: 1px dotted rgba(255,255,255,.35);
+  font-weight: 700;
+}
+.callout a.link:hover { border-bottom-style: solid; }
+.callout .badge {
+  margin-left: 8px; padding: 2px 8px; border-radius: 9999px;
+  font-size: .7rem; background: rgba(168,85,247,.2);
+  border: 1px solid rgba(168,85,247,.5); color: #e9d5ff;
+}
 
-    <section>
-      <blockquote id="quoteText">Loading quote…</blockquote>
-      <cite id="quoteAuthor"></cite>
-    </section>
+/* Quote */
+.quote {
+  margin-top: 22px;
+  padding: 16px; border-radius: 12px;
+  background: var(--panel); border:1px solid var(--border);
+  position: relative;
+}
+.quote blockquote { margin: 0 0 8px; font-size: 1.05rem; }
+.quote cite { color: var(--text-dim); font-style: normal; }
+#refreshQuote {
+  position:absolute; right:10px; top:10px;
+  background:#121833; color:#fff; border:1px solid var(--border);
+  border-radius:10px; padding:4px 8px; cursor:pointer;
+}
 
-    <footer>
-      <p>Made by <a href="https://github.com/rroyal1504">rRoyal</a> · Source on <a href="https://github.com/rroyal1504/thptqg-countdown">GitHub</a></p>
-    </footer>
-  </main>
+/* Footer */
+.footer { margin-top: 28px; color: var(--text-dim); }
+.footer a { color:#c6b6ff; }
 
-  <script src="script.js"></script>
-</body>
-</html>
+/* Responsive */
+@media (max-width: 640px){
+  .countdown { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
