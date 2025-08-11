@@ -1,3 +1,4 @@
+// ===== Helpers =====
 const $ = (sel) => document.querySelector(sel);
 
 function toISODateInput(d) {
@@ -10,20 +11,18 @@ function fromISODateInput(v) {
   const [y, m, d] = v.split('-').map(Number);
   return new Date(y, m - 1, d);
 }
-function ddmmyyyy(d) {
-  const day = String(d.getDate()).padStart(2, '0');
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  return `${day}/${m}/${d.getFullYear()}`;
-}
 
+// ===== Exam date state =====
 const DATE_KEY = 'thptqg_exam_date_iso';
 const dateInput = $('#examDate');
 const saveBtn   = $('#saveDate');
+// targetEl có thể KHÔNG tồn tại nếu bạn xoá phần "Mục tiêu"
 const targetEl  = $('#targetText');
 
 function defaultExamDate() {
+  // 25/06 năm hiện tại; nếu đã qua -> sang năm sau
   const now = new Date();
-  const d = new Date(now.getFullYear(), 5, 25); // 25/06
+  const d = new Date(now.getFullYear(), 5, 25);
   if (now > d) d.setFullYear(d.getFullYear() + 1);
   return d;
 }
@@ -32,32 +31,50 @@ function loadExamDate() {
   return iso ? fromISODateInput(iso) : defaultExamDate();
 }
 function saveExamDate(d) {
-  localStorage.setItem(DATE_KEY, toISODateInput(d));
+  try { localStorage.setItem(DATE_KEY, toISODateInput(d)); } catch {}
 }
 
 let examDate = loadExamDate();
-dateInput.value = toISODateInput(examDate);
-targetEl.textContent = 'Mục tiêu: ' + ddmmyyyy(examDate);
 
-saveBtn.addEventListener('click', () => {
-  const v = dateInput.value;
-  if (!v) return;
-  examDate = fromISODateInput(v);
-  saveExamDate(examDate);
-  targetEl.textContent = 'Mục tiêu: ' + ddmmyyyy(examDate);
-});
+// Nếu còn input thì set value; nếu không có thì vẫn chạy countdown bình thường
+if (dateInput) dateInput.value = toISODateInput(examDate);
+// Nếu còn "Mục tiêu" thì cập nhật, còn không thì bỏ qua
+if (targetEl) targetEl.textContent = 'Mục tiêu: ' + toISODateInput(examDate).split('-').reverse().join('/');
 
+// Lắng nghe nút Lưu nếu có
+if (saveBtn && dateInput) {
+  saveBtn.addEventListener('click', () => {
+    const v = dateInput.value;
+    if (!v) return;
+    examDate = fromISODateInput(v);
+    saveExamDate(examDate);
+    if (targetEl) {
+      const [y, m, d] = v.split('-');
+      targetEl.textContent = `Mục tiêu: ${d}/${m}/${y}`;
+    }
+  });
+}
+
+// ===== Countdown =====
 const dEl = $('#cd-days'), hEl = $('#cd-hours'), mEl = $('#cd-mins'), sEl = $('#cd-secs');
 
 function tick() {
   const now = new Date();
+
+  // nếu đã qua ngày thi -> sang năm sau
   if (now > examDate) {
     examDate = new Date(examDate.getFullYear() + 1, examDate.getMonth(), examDate.getDate());
     saveExamDate(examDate);
-    dateInput.value = toISODateInput(examDate);
-    targetEl.textContent = 'Mục tiêu: ' + ddmmyyyy(examDate);
+    if (dateInput) dateInput.value = toISODateInput(examDate);
+    if (targetEl) {
+      const v = toISODateInput(examDate).split('-').reverse().join('/');
+      targetEl.textContent = 'Mục tiêu: ' + v;
+    }
   }
-  const diff = Math.max(0, (examDate - now) / 1000);
+
+  const diff = Math.max(0, (examDate - now) / 1000); // không để âm
+  if (!dEl || !hEl || !mEl || !sEl) return; // thiếu phần tử thì bỏ qua
+
   const days  = Math.floor(diff / 86400);
   const hours = Math.floor((diff % 86400) / 3600);
   const mins  = Math.floor((diff % 3600) / 60);
@@ -71,12 +88,14 @@ function tick() {
 tick();
 setInterval(tick, 1000);
 
+// ===== Quotes (ZenQuotes + cache theo ngày) =====
 const quoteText = $('#quoteText');
 const quoteAuthor = $('#quoteAuthor');
 const refreshBtn = $('#refreshQuote');
 const QUOTE_KEY = 'thptqg_quote_cache_v2';
 
 function renderQuote(q) {
+  if (!quoteText || !quoteAuthor) return;
   const text = q.q || q.quote || "";
   const author = q.a || q.author || "Unknown";
   quoteText.textContent = `“${text}”`;
@@ -93,21 +112,22 @@ async function fetchQuote(force = false) {
         return;
       }
     }
-
     const res = await fetch('https://zenquotes.io/api/random', { cache: 'no-store' });
     const data = await res.json();
     const q = Array.isArray(data) ? data[0] : data;
-
-    localStorage.setItem(QUOTE_KEY, JSON.stringify({ date: todayKey, data: q }));
+    try { localStorage.setItem(QUOTE_KEY, JSON.stringify({ date: todayKey, data: q })); } catch {}
     renderQuote(q);
   } catch {
-    quoteText.textContent = 'Không tải được quote. Thử lại sau.';
-    quoteAuthor.textContent = '';
+    if (quoteText && quoteAuthor) {
+      quoteText.textContent = 'Không tải được quote. Thử lại sau.';
+      quoteAuthor.textContent = '';
+    }
   }
 }
-refreshBtn.addEventListener('click', () => fetchQuote(true));
+if (refreshBtn) refreshBtn.addEventListener('click', () => fetchQuote(true));
 fetchQuote();
 
+// ===== Callout close & remember =====
 const CALLOUT_KEY = 'hocba_callout_closed_v1';
 const callout = document.getElementById('hocbaCallout');
 const closeCalloutBtn = document.getElementById('closeCallout');
