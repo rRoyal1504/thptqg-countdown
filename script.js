@@ -1,138 +1,115 @@
-const DEFAULT_MONTH = 6;   // 6 = June
-const DEFAULT_DAY   = 25;  // 25/06 hằng năm
-const LS_KEY_DATE   = 'thptqg_exam_date';
-const LS_QUOTE      = 'thptqg_quote';
-const LS_QUOTE_AT   = 'thptqg_quote_at';
-
+// ===== Helpers =====
 const $ = (sel) => document.querySelector(sel);
 
-function formatYMD(date) {
-  const y = date.getFullYear();
-  const m = String(date.getMonth()+1).padStart(2,'0');
-  const d = String(date.getDate()).padStart(2,'0');
-  return `${y}-${m}-${d}`;
+function toISODateInput(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
 }
-function parseYMD(ymd) {
-  const [y,m,d] = ymd.split('-').map(n=>parseInt(n,10));
-  if(!y || !m || !d) return null;
-  return new Date(y, m-1, d, 0, 0, 0);
+function fromISODateInput(v) {
+  // v: "yyyy-mm-dd"
+  const [y, m, d] = v.split('-').map(Number);
+  return new Date(y, m - 1, d);
 }
-function daysDiff(ms) {
-  const sec = Math.floor(ms/1000);
-  const d = Math.floor(sec/86400);
-  const h = Math.floor((sec%86400)/3600);
-  const m = Math.floor((sec%3600)/60);
-  const s = sec % 60;
-  return { d, h, m, s };
+function ddmmyyyy(d) {
+  const day = String(d.getDate()).padStart(2, '0');
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  return `${day}/${m}/${d.getFullYear()}`;
 }
 
-function getDefaultExamDate() {
+// ===== Exam date state =====
+const DATE_KEY = 'thptqg_exam_date_iso';
+const dateInput = $('#examDate');
+const saveBtn   = $('#saveDate');
+const targetEl  = $('#targetText');
+
+function defaultExamDate() {
+  // 25/06 current year; if past -> next year
   const now = new Date();
-  const currentY = now.getFullYear();
-  let target = new Date(currentY, DEFAULT_MONTH - 1, DEFAULT_DAY, 0, 0, 0);
-  if (target.getTime() <= now.getTime()) {
-    target = new Date(currentY + 1, DEFAULT_MONTH - 1, DEFAULT_DAY, 0, 0, 0);
-  }
-  return target;
-}
-
-function loadExamDate() {
-  const raw = localStorage.getItem(LS_KEY_DATE);
-  if (!raw) return getDefaultExamDate();
-  const d = parseYMD(raw);
-  if (!d) return getDefaultExamDate();
-
-  const now = new Date();
-  if (d.getTime() <= now.getTime()) {
-    return new Date(now.getFullYear() + 1, d.getMonth(), d.getDate(), 0,0,0);
-  }
+  const d = new Date(now.getFullYear(), 5, 25); // month 5 = June
+  if (now > d) d.setFullYear(d.getFullYear() + 1);
   return d;
 }
 
-function saveExamDate(date) {
-  localStorage.setItem(LS_KEY_DATE, formatYMD(date));
+function loadExamDate() {
+  const iso = localStorage.getItem(DATE_KEY);
+  return iso ? fromISODateInput(iso) : defaultExamDate();
+}
+function saveExamDate(d) {
+  localStorage.setItem(DATE_KEY, toISODateInput(d));
 }
 
-const $date   = $('#examDate');
-const $save   = $('#saveDate');
-const $days   = $('#cd-days');
-const $hours  = $('#cd-hours');
-const $mins   = $('#cd-mins');
-const $secs   = $('#cd-secs');
-const $target = $('#targetText');
-const $quote  = $('#quoteText');
-const $author = $('#quoteAuthor');
-const $refresh= $('#refreshQuote');
-
 let examDate = loadExamDate();
-$date.value  = formatYMD(examDate);
-$target.textContent = 'Mục tiêu: ' + examDate.toLocaleDateString('vi-VN');
+dateInput.value = toISODateInput(examDate);
+targetEl.textContent = 'Mục tiêu: ' + ddmmyyyy(examDate);
 
-$save.addEventListener('click', () => {
-  const d = parseYMD($date.value);
-  if (!d) return;
-  examDate = d;
+saveBtn.addEventListener('click', () => {
+  const v = dateInput.value;
+  if (!v) return;
+  examDate = fromISODateInput(v);
   saveExamDate(examDate);
-  $target.textContent = 'Mục tiêu: ' + examDate.toLocaleDateString('vi-VN');
+  targetEl.textContent = 'Mục tiêu: ' + ddmmyyyy(examDate);
 });
+
+// ===== Countdown =====
+const dEl = $('#cd-days'), hEl = $('#cd-hours'), mEl = $('#cd-mins'), sEl = $('#cd-secs');
 
 function tick() {
   const now = new Date();
-  if (examDate.getTime() <= now.getTime()) {
-    examDate = new Date(now.getFullYear()+1, examDate.getMonth(), examDate.getDate(), 0,0,0);
+  // nếu đã qua ngày thi -> sang năm sau
+  if (now > examDate) {
+    examDate = new Date(examDate.getFullYear() + 1, examDate.getMonth(), examDate.getDate());
     saveExamDate(examDate);
-    $date.value = formatYMD(examDate);
-    $target.textContent = 'Mục tiêu: ' + examDate.toLocaleDateString('vi-VN');
+    dateInput.value = toISODateInput(examDate);
+    targetEl.textContent = 'Mục tiêu: ' + ddmmyyyy(examDate);
   }
 
-  const diff = examDate.getTime() - now.getTime();
-  const { d,h,m,s } = daysDiff(diff);
-  $days.textContent  = d.toString();
-  $hours.textContent = h.toString().padStart(2,'0');
-  $mins.textContent  = m.toString().padStart(2,'0');
-  $secs.textContent  = s.toString().padStart(2,'0');
+  const diff = (examDate - now) / 1000; // seconds
+  const days  = Math.floor(diff / 86400);
+  const hours = Math.floor((diff % 86400) / 3600);
+  const mins  = Math.floor((diff % 3600) / 60);
+  const secs  = Math.floor(diff % 60);
+
+  dEl.textContent = days.toString();
+  hEl.textContent = hours.toString().padStart(2, '0');
+  mEl.textContent = mins.toString().padStart(2, '0');
+  sEl.textContent = secs.toString().padStart(2, '0');
 }
 tick();
 setInterval(tick, 1000);
 
-async function fetchQuote() {
+// ===== Quotes (with daily cache) =====
+const quoteText = $('#quoteText');
+const quoteAuthor = $('#quoteAuthor');
+const refreshBtn = $('#refreshQuote');
+const QUOTE_KEY = 'thptqg_quote_cache_v1';
+
+async function fetchQuote(force = false) {
   try {
-    const todayKey = new Date().toISOString().slice(0,10);
-    const cachedAt = localStorage.getItem(LS_QUOTE_AT);
-    const cached   = localStorage.getItem(LS_QUOTE);
-
-    if (cached && cachedAt === todayKey) {
-      const q = JSON.parse(cached);
-      renderQuote(q);
-      return;
+    const todayKey = new Date().toISOString().slice(0, 10); // yyyy-mm-dd
+    if (!force) {
+      const cached = JSON.parse(localStorage.getItem(QUOTE_KEY) || 'null');
+      if (cached && cached.date === todayKey) {
+        renderQuote(cached.data);
+        return;
+      }
     }
 
-    const res = await fetch('https://zenquotes.io/api/random', { cache:'no-store' });
+    const res = await fetch('https://zenquotes.io/api/random');
     const data = await res.json();
-    const q = (Array.isArray(data) && data[0]) ? { text: data[0].q, author: data[0].a } : null;
+    const q = Array.isArray(data) ? data[0] : data;
 
-    if (q && q.text) {
-      localStorage.setItem(LS_QUOTE, JSON.stringify(q));
-      localStorage.setItem(LS_QUOTE_AT, todayKey);
-      renderQuote(q);
-    } else {
-      renderQuote({ text: 'Học, học nữa, học mãi.', author: 'V.I. Lenin' });
-    }
-  } catch {
-    renderQuote({ text: 'Không có áp lực, không có kim cương.', author: 'Thomas Carlyle' });
+    localStorage.setItem(QUOTE_KEY, JSON.stringify({ date: todayKey, data: q }));
+    renderQuote(q);
+  } catch (e) {
+    quoteText.textContent = 'Không tải được quote. Thử lại sau nhé.';
+    quoteAuthor.textContent = '';
   }
 }
-
 function renderQuote(q) {
-  $quote.textContent = `“${q.text}”`;
-  $author.textContent = q.author ? `— ${q.author}` : '';
+  quoteText.textContent = '“' + (q.q || q.quote || '') + '”';
+  quoteAuthor.textContent = '— ' + (q.a || q.author || 'Unknown');
 }
-
-$refresh.addEventListener('click', () => {
-  localStorage.removeItem(LS_QUOTE);
-  localStorage.removeItem(LS_QUOTE_AT);
-  $quote.textContent  = 'Loading quote…';
-  $author.textContent = '';
-  fetchQuote();
-});
+refreshBtn.addEventListener('click', () => fetchQuote(true));
 fetchQuote();
