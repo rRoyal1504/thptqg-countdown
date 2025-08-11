@@ -36,7 +36,10 @@
 <body>
   <main class="container">
     <header class="hero">
-      <h1>⏳ Đếm ngược thi THPT Quốc Gia 2026</h1>
+      <h1 class="hero-title">
+        <span class="logo" aria-hidden="true">⏳</span>
+        <span class="title-text">Đếm ngược thi THPT Quốc Gia 2026</span>
+      </h1>
       <p class="subtitle">Xem còn bao nhiêu <strong>ngày, giờ, phút, giây</strong> đến kỳ thi quan trọng nhất 12 năm đèn sách.</p>
     </header>
 
@@ -44,7 +47,6 @@
       <label for="examDate">Ngày thi (mặc định 25/06 hằng năm):</label>
       <input id="examDate" type="date" />
       <button id="saveDate">Lưu</button>
-      <small class="hint">Trang sẽ tự chuyển sang năm sau sau khi qua ngày thi.</small>
     </section>
 
     <section class="countdown" aria-live="polite">
@@ -66,8 +68,6 @@
       </div>
     </section>
 
-    <p id="targetText" class="target">Mục tiêu: —</p>
-
     <section class="quote" aria-label="Quote cảm hứng">
       <blockquote id="quoteText">Loading quote…</blockquote>
       <cite id="quoteAuthor"></cite>
@@ -79,12 +79,13 @@
     </footer>
   </main>
 
-  <!-- Callout nổi góc dưới-phải -->
-  <aside class="callout callout-fab" aria-live="polite">
+  <aside class="callout callout-fab" id="hocbaCallout" aria-live="polite">
+    <button class="callout-close" id="closeCallout" aria-label="Đóng callout">✕</button>
     <div class="icn">📌</div>
     <div class="content">
       <strong>Công cụ tính điểm học bạ <span class="badge">mới</span></strong><br/>
-      Cần tính điểm xét tuyển đại học theo học bạ 3 năm cấp 3? <a class="link" href="https://rroyal1504.github.io/hocba-calculator/" target="_blank" rel="noopener">Mở công cụ</a>.
+      Cần tính điểm xét tuyển đại học theo học bạ 3 năm cấp 3?
+      <a class="link" href="https://rroyal1504.github.io/hocba-calculator/" target="_blank" rel="noopener">Mở công cụ</a>.
     </div>
   </aside>
 
